@@ -15,7 +15,7 @@
 
 ### Screenshot
 
-![qr imagen](https://raw.githubusercontent.com/peruviansd/TicTacToe/main/design/mobile-design.jpg)
+![qr imagen](https://raw.githubusercontent.com/peruviansd/TicTacToe/main/designs/mobile-design.jpg)
 
 ### Links
 
