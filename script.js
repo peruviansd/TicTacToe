@@ -1,6 +1,7 @@
 (function () {
   const container = document.querySelector("#container");
   const button = document.querySelector("#restart");
+  let winnerCombination;
 
   const combinationToWin = [
     "123",
@@ -25,10 +26,14 @@
   const checkWinner = (combinationToWin, combinationPlayer) => {
     for (const comb of combinationToWin) {
       const regex = new RegExp(`[${comb[0]}|${comb[1]}|${comb[2]}]`, "g");
-      const arr = combinationPlayer.match(regex);
+      winnerCombination = combinationPlayer.match(regex);
 
-      if (arr && arr.length === 3) {
+      if (winnerCombination && winnerCombination.length === 3) {
         alert("You've won");
+
+        winnerCombination.forEach(
+          (el) => (document.getElementById(el).style.color = "green")
+        );
         button.disabled = false;
         button.style.opacity = "1";
         container.removeEventListener("click", handleClick);
@@ -47,11 +52,10 @@
     if (!e.target.textContent && turno == "A") {
       e.target.textContent = "X";
       combinationsA += e.target.id;
-      if (combinationsB) {
-        combinationToWinA = combinationToWinA.filter(
-          (e) => !e.includes(combinationsB.slice(-1))
-        );
-      }
+
+      combinationToWinB = combinationToWinB.filter(
+        (e) => !e.includes(combinationsA.slice(-1))
+      );
 
       if (combinationsA.length > 2) {
         checkWinner(combinationToWinA, combinationsA);
@@ -60,11 +64,10 @@
     } else if (!e.target.textContent && turno == "B") {
       e.target.textContent = "O";
       combinationsB += e.target.id;
-      if (combinationsA) {
-        combinationToWinB = combinationToWinB.filter(
-          (e) => !e.includes(combinationsA.slice(-1))
-        );
-      }
+
+      combinationToWinA = combinationToWinA.filter(
+        (e) => !e.includes(combinationsB.slice(-1))
+      );
 
       if (combinationsB.length > 2) {
         checkWinner(combinationToWinB, combinationsB);
@@ -82,5 +85,8 @@
     combinationToWinB = [...combinationToWin];
     combinationsA = "";
     combinationsB = "";
+    winnerCombination.forEach(
+      (el) => (document.getElementById(el).style.color = "white")
+    );
   }
 })();
